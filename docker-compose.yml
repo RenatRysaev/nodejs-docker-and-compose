@@ -8,7 +8,7 @@ services:
     networks:
       - internet
     ports:
-      - 8081:80
+      - "8000:80"
     restart: unless-stopped
 
   backend:
@@ -20,7 +20,7 @@ services:
       - internal-network
       - internet
     ports:
-      - "4000:3000"
+      - "9000:9000"
     depends_on:
       - database
     env_file:

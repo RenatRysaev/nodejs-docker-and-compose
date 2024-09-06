@@ -9,6 +9,5 @@ FROM nginx:alpine AS production
 WORKDIR /app
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d
-EXPOSE 8000
 
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
