@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    image: frontend:node16-alpine
+    networks:
+      - internet
+    ports:
+      - 8081:80
+    restart: unless-stopped
+
+  backend:
+    image: "backend:node16-alpine"
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    networks:
+      - internal-network
+      - internet
+    ports:
+      - "4000:3000"
+    depends_on:
+      - database
+    env_file:
+      - backend/.env
+    restart: unless-stopped
+
+  database:
+    image: "postgres:13"
+    volumes:
+      - "./pg-data:/var/lib/postgresql/data/pgdata"
+    networks:
+      - internal-network
+    env_file:
+      - backend/.env
+    restart: unless-stopped
+
+networks:
+  internal-network:
+    driver: bridge
+    internal: true
+  internet:
+    driver: bridge
