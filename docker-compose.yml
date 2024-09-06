@@ -30,7 +30,7 @@ services:
   database:
     image: "postgres:13"
     volumes:
-      - "./pg-data:/var/lib/postgresql/data/pgdata"
+      - "./postgres_data:/data/postgres"
     networks:
       - internal-network
     env_file:
@@ -43,3 +43,6 @@ networks:
     internal: true
   internet:
     driver: bridge
+
+volumes:
+  postgres_data:
