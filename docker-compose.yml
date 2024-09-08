@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   frontend:
+    container_name: frontend/nginx:latest-container
     build:
       context: frontend
       dockerfile: Dockerfile
@@ -12,10 +13,11 @@ services:
     restart: unless-stopped
 
   backend:
-    image: "backend/node16-alpine"
+    container_name: backend/node16-alpine-container
     build:
       context: backend
       dockerfile: Dockerfile
+    image: backend/node16-alpine
     networks:
       - internal-network
       - internet
@@ -28,7 +30,8 @@ services:
     restart: unless-stopped
 
   database:
-    image: "postgres:13"
+    container_name: database-container
+    image: postgres:13
     volumes:
       - "./postgres_data:/data/postgres"
     networks:
